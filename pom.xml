@@ -4,7 +4,7 @@
 
     <groupId>dev.scratch</groupId>
     <artifactId>simple-state-machine</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Simple State Machine</name>
@@ -33,6 +33,6 @@
     </build>
     <scm>
         <developerConnection>scm:git:https://github.com/Jaiming724/SimpleStateMachine.git</developerConnection>
-        <tag>simple-state-machine-1.0.0-SNAPSHOT</tag>
+        <tag>SimpleStateMachine-1.0.0-SNAPSHOT</tag>
     </scm>
 </project>
