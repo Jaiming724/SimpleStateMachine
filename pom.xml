@@ -8,6 +8,15 @@
     <artifactId>simple-state-machine</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <name>Simple State Machine</name>
+    <description>This is a very basic library for creating and running state machines</description>
+    <url>https://github.com/Jaiming724/SimpleStateMachine</url>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
