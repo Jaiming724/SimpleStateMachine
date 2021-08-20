@@ -1,4 +1,4 @@
-package conditions;
+package dev.scratch.simplestatemachine.conditions;
 
 public class TimedCondition extends Condition {
     private final double time;

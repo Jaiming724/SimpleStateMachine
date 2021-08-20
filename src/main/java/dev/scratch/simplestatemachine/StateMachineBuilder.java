@@ -1,3 +1,5 @@
+package dev.scratch.simplestatemachine;
+
 public class StateMachineBuilder {
     private final StateMachine stateMachine;
 

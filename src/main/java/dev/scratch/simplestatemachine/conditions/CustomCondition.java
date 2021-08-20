@@ -1,6 +1,6 @@
-package conditions;
+package dev.scratch.simplestatemachine.conditions;
 
-import util.Callback;
+import dev.scratch.simplestatemachine.util.Callback;
 
 public class CustomCondition extends Condition {
     private Callback callback;

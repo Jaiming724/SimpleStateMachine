@@ -1,3 +1,5 @@
+package dev.scratch.simplestatemachine;
+
 public class State {
 
     private String name;

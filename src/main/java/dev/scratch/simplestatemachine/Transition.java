@@ -1,4 +1,6 @@
-import conditions.Condition;
+package dev.scratch.simplestatemachine;
+
+import dev.scratch.simplestatemachine.conditions.Condition;
 
 public class Transition {
     private String name;

@@ -1,6 +1,8 @@
-import conditions.CustomCondition;
-import conditions.TimedCondition;
-import util.Callback;
+package dev.scratch.simplestatemachine;
+
+import dev.scratch.simplestatemachine.conditions.CustomCondition;
+import dev.scratch.simplestatemachine.conditions.TimedCondition;
+import dev.scratch.simplestatemachine.util.Callback;
 
 public class TransitionBuilder {
     private Transition transition;

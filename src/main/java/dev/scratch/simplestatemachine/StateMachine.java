@@ -1,4 +1,6 @@
-import conditions.TimedCondition;
+package dev.scratch.simplestatemachine;
+
+import dev.scratch.simplestatemachine.conditions.TimedCondition;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,7 @@ public class StateMachine {
     private int counter = 0;
 
     public void init(State state) {
-        if (currentState != null) throw new IllegalStateException("State machine has already been initialized!");
+        if (currentState != null) throw new IllegalStateException("dev.scratch.simplestatemachine.State machine has already been initialized!");
         currentState = state;
         currentState.getOnEntry().run();
     }
@@ -22,7 +24,7 @@ public class StateMachine {
     }
 
     public void loop() {
-        if (currentState == null) throw new IllegalStateException("State machine is not yet initialized!");
+        if (currentState == null) throw new IllegalStateException("dev.scratch.simplestatemachine.State machine is not yet initialized!");
         currentState = transitions.get(counter).getFrom();
         currentTransition = transitions.get(counter);
         if (currentTransition.getCondition() instanceof TimedCondition) {
