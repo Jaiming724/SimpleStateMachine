@@ -9,7 +9,6 @@
 
     <name>Simple State Machine</name>
     <description>This is a very basic library for creating and running state machines</description>
-    <url>https://github.com/Jaiming724/SimpleStateMachine</url>
     <licenses>
         <license>
             <name>MIT License</name>
@@ -20,21 +19,35 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>3.2.1</version>
+        </dependency>
+
+    </dependencies>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
+                <configuration> <!-- Compile java 7 compatible bytecode -->
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <id>attach-sources</id>
                         <goals>
-                            <goal>shade</goal>
+                            <goal>jar</goal>
                         </goals>
-                        <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
