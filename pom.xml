@@ -6,7 +6,8 @@
 
     <groupId>dev.scratch</groupId>
     <artifactId>simple-state-machine</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <name>Simple State Machine</name>
     <description>This is a very basic library for creating and running state machines</description>
@@ -21,5 +22,19 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <goals>install</goals>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <scm>
+        <developerConnection>scm:git:https://github.com/Jaiming724/SimpleStateMachine.git</developerConnection>
+        <tag>SimpleStateMachine-1.0.0-SNAPSHOT</tag>
+    </scm>
 </project>
