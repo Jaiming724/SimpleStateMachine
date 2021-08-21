@@ -30,13 +30,13 @@ public class TransitionBuilder {
         return transition;
     }
 
-    public TransitionBuilder timedTransition(double time) {
-        transition.setCondition(new TimedCondition(time));
+    public TransitionBuilder timedTransition(double time, State state) {
+        transition.addCondition(new TimedCondition(time), state);
         return this;
     }
 
-    public TransitionBuilder customTransition(Callback callback) {
-        transition.setCondition(new CustomCondition(callback));
+    public TransitionBuilder customTransition(Callback callback, State state) {
+        transition.addCondition(new CustomCondition(callback), state);
         return this;
     }
 }

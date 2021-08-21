@@ -2,11 +2,18 @@ package dev.scratch.simplestatemachine;
 
 import dev.scratch.simplestatemachine.conditions.Condition;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Transition {
     private String name;
     private State from;
     private State to;
-    private Condition condition;
+    private Map<Condition, State> conditions;
+
+    public Transition() {
+        conditions = new HashMap<>();
+    }
 
     public String getName() {
         return name;
@@ -32,15 +39,23 @@ public class Transition {
         this.to = to;
     }
 
-    public Condition getCondition() {
-        return condition;
+    public Map<Condition, State> getConditions() {
+        return conditions;
     }
 
     public boolean shouldTransition() {
-        return condition.shouldTransition();
+        for (Map.Entry<Condition, State> condition : conditions.entrySet()) {
+            if (condition.getKey().shouldTransition()) {
+                setTo(condition.getValue());
+                return true;
+            }
+        }
+        return false;
     }
 
-    public void setCondition(Condition condition) {
-        this.condition = condition;
+    public void addCondition(Condition condition, State state) {
+        conditions.put(condition, state);
     }
+
+
 }

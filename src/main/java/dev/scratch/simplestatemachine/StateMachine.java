@@ -14,7 +14,8 @@ public class StateMachine {
     private int counter = 0;
 
     public void init(State state) {
-        if (currentState != null) throw new IllegalStateException("dev.scratch.simplestatemachine.State machine has already been initialized!");
+        if (currentState != null)
+            throw new IllegalStateException("State machine has already been initialized!");
         currentState = state;
         currentState.getOnEntry().run();
     }
@@ -24,14 +25,22 @@ public class StateMachine {
     }
 
     public void loop() {
-        if (currentState == null) throw new IllegalStateException("dev.scratch.simplestatemachine.State machine is not yet initialized!");
+        if (currentState == null)
+            throw new IllegalStateException("State machine is not yet initialized!");
         currentState = transitions.get(counter).getFrom();
         currentTransition = transitions.get(counter);
-        if (currentTransition.getCondition() instanceof TimedCondition) {
-            ((TimedCondition) currentTransition.getCondition()).startTimer();
-        }
+        currentTransition.getConditions().forEach((condition, state) -> {
+            if (condition instanceof TimedCondition) {
+                ((TimedCondition) condition).startTimer();
+            }
+        });
         if (currentTransition.shouldTransition()) {
+//            System.out.println("Current state "+currentState.getName());
+//            System.out.println("To State "+currentTransition.getTo().getName());
             currentState.getOnExit().run();
+            if(counter+1<transitions.size()){
+                transitions.get(counter+1).setFrom(currentTransition.getTo());
+            }
             currentState = currentTransition.getTo();
             currentState.getOnEntry().run();
             System.out.println("Removing transition " + currentTransition.getName());
