@@ -3,6 +3,7 @@ import dev.scratch.simplestatemachine.*;
 public class Main {
     public static void main(String[] args) {
         int count = 0;
+
         State state1 = new StateBuilder()
                 .name("State1")
                 .onEntry(() -> System.out.println("Entering state 1"))
@@ -16,35 +17,32 @@ public class Main {
                 .loop(() -> System.out.println("Looping state 2"))
                 .onExit(() -> System.out.println("Exiting state 2"))
                 .build();
-        State state3 = new StateBuilder()
-                .name("State3")
-                .onEntry(() -> System.out.println("Entering state 3"))
-                .loop(() -> System.out.println("Looping state 3"))
-                .onExit(() -> System.out.println("Exiting state 3"))
+
+        State off = new StateBuilder()
+                .name("off")
+                .onEntry(() -> System.out.println("Entering state off"))
+                .loop(() -> System.out.println("Looping state off"))
+                .onExit(() -> System.out.println("Exiting state off"))
                 .build();
-        State state4 = new StateBuilder()
-                .name("State4")
-                .onEntry(() -> System.out.println("Entering state 4"))
-                .loop(() -> System.out.println("Looping state 4"))
-                .onExit(() -> System.out.println("Exiting state 4"))
-                .build();
+
         Transition transition1 = new TransitionBuilder()
                 .name("state1To2")
                 .from(state1)
-                .customTransition(() -> count == 2, state2)
-                .customTransition(() -> count == 1, state3)
-                .timedTransition(50,state2)
+                .customTransition(() -> count == 0, state2)
                 .build();
         Transition transition2 = new TransitionBuilder()
                 .name("state2To3")
-                .customTransition(() -> 3 < 6, state4)
-                 .build();
-
+                .customTransition(() -> 3 < 6, off)
+                .build();
+        Transition transition3 = new TransitionBuilder()
+                .exit()
+                .build();
+        state1.setTransition(transition1);
+        state2.setTransition(transition2);
+        off.setTransition(transition3);
 
         StateMachine stateMachine = new StateMachineBuilder()
                 .init(state1)
-                .addTransition(transition1)
-                .addTransition(transition2)
                 .build();
         while (!stateMachine.isShouldExit()) {
             stateMachine.loop();
