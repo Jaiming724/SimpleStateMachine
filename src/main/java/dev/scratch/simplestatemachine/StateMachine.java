@@ -28,7 +28,7 @@ public class StateMachine {
         if (currentState == null)
             throw new IllegalStateException("State machine is not yet initialized!");
         currentTransition = currentState.getTransition();
-        if (currentTransition.isExit()) {
+        if (currentTransition.shouldExit()) {
             currentState.getOnExit().run();
             shouldExit = true;
             return;

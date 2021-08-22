@@ -44,7 +44,7 @@ public class Transition {
         return conditions;
     }
 
-    public boolean isExit() {
+    public boolean shouldExit() {
         return exit;
     }
 
