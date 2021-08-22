@@ -42,7 +42,6 @@ public class StateMachine {
         if (currentTransition.shouldTransition()) {
             currentState.getOnExit().run();
             if (currentTransition.getTo() == null) {
-                currentState.getOnExit().run();
                 shouldExit = true;
             } else {
                 currentState = currentTransition.getTo();
