@@ -12,6 +12,11 @@ public class StateMachine {
         if (currentState != null)
             throw new IllegalStateException("State machine has already been initialized!");
         currentState = state;
+    }
+
+    public void start() {
+        if (currentState == null)
+            throw new IllegalStateException("State machine has not been initialized");
         currentState.getOnEntry().run();
     }
 
@@ -24,6 +29,7 @@ public class StateMachine {
             throw new IllegalStateException("State machine is not yet initialized!");
         currentTransition = currentState.getTransition();
         if (currentTransition.isExit()) {
+            currentState.getOnExit().run();
             shouldExit = true;
             return;
         }
@@ -48,5 +54,10 @@ public class StateMachine {
 
     }
 
+    public void shutdown() {
+        if (currentState == null)
+            throw new IllegalStateException("State machine is not initialized and cannot be shut down!");
+        currentState = null;
+    }
 
 }
