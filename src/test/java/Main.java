@@ -2,50 +2,54 @@ import dev.scratch.simplestatemachine.*;
 
 public class Main {
     public static void main(String[] args) {
-        int count = 0;
-
-        State state1 = new StateBuilder()
-                .name("State1")
-                .onEntry(() -> System.out.println("Entering state 1"))
-                .loop(() -> System.out.println("Looping state 1"))
-                .onExit(() -> System.out.println("Exiting state 1"))
+        Thermometer thermometer = new Thermometer();
+        State solid = new StateBuilder()
+                .name("solid")
+                .onEntry(() -> System.out.println("Entering solid state"))
+                .loop(() -> System.out.println("Looping in solid state"))
+                .onExit(() -> System.out.println("Exiting solid state"))
+                .build();
+        State liquid = new StateBuilder()
+                .name("liquid")
+                .onEntry(() -> System.out.println("Entering liquid state"))
+                .loop(() -> System.out.println("Looping in liquid state"))
+                .onExit(() -> System.out.println("Exiting liquid state"))
                 .build();
 
-        State state2 = new StateBuilder()
-                .name("State2")
-                .onEntry(() -> System.out.println("Entering state 2"))
-                .loop(() -> System.out.println("Looping state 2"))
-                .onExit(() -> System.out.println("Exiting state 2"))
+        State gas = new StateBuilder()
+                .name("gas")
+                .onEntry(() -> System.out.println("Entering gas state"))
+                .loop(() -> System.out.println("Looping in gas state"))
+                .onExit(() -> System.out.println("Exiting gas state"))
+                .build();
+        Transition solidTransition = new TransitionBuilder()
+                .name("Solid Transition")
+                .customTransition(() -> thermometer.getTemperature() > 0 && thermometer.getTemperature() < 100, liquid)
+                .customTransition(() -> thermometer.getTemperature() > 100, gas)
+                .build();
+        Transition gasTransition = new TransitionBuilder()
+                .name("Gas Transition")
+                .customTransition(() -> thermometer.getTemperature() < 0, solid)
+                .customTransition(() -> thermometer.getTemperature() < 100, liquid)
                 .build();
 
-        State off = new StateBuilder()
-                .name("off")
-                .onEntry(() -> System.out.println("Entering state off"))
-                .loop(() -> System.out.println("Looping state off"))
-                .onExit(() -> System.out.println("Exiting state off"))
+        Transition liquidTransition = new TransitionBuilder()
+                .name("Liquid Transition")
+                .customTransition(() -> thermometer.getTemperature() < 0, solid)
+                .customTransition(() -> thermometer.getTemperature() > 100, gas)
                 .build();
-
-        Transition transition1 = new TransitionBuilder()
-                .name("state1To2")
-                .from(state1)
-                .customTransition(() -> count == 0, state2)
-                .build();
-        Transition transition2 = new TransitionBuilder()
-                .name("state2To3")
-                .customTransition(() -> 3 < 6, off)
-                .build();
-        Transition transition3 = new TransitionBuilder()
-                .exit()
-                .build();
-        state1.setTransition(transition1);
-        state2.setTransition(transition2);
-        off.setTransition(transition3);
-
+        solid.setTransition(solidTransition);
+        gas.setTransition(gasTransition);
+        liquid.setTransition(liquidTransition);
         StateMachine stateMachine = new StateMachineBuilder()
-                .init(state1)
+                .init(solid)
                 .build();
+        stateMachine.start();
         while (!stateMachine.isShouldExit()) {
+            thermometer.setTemperature();
             stateMachine.loop();
         }
+        stateMachine.shutdown();
     }
+
 }
