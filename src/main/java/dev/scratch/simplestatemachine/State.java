@@ -7,6 +7,9 @@ public class State {
     private Runnable onExit;
     private Runnable loop;
 
+
+    private Transition transition;
+
     public String getName() {
         return name;
     }
@@ -37,5 +40,13 @@ public class State {
 
     public void setLoop(Runnable loop) {
         this.loop = loop;
+    }
+
+    public Transition getTransition() {
+        return transition;
+    }
+
+    public void setTransition(Transition transition) {
+        this.transition = transition;
     }
 }

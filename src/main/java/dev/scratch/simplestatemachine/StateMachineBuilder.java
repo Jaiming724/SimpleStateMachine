@@ -12,10 +12,6 @@ public class StateMachineBuilder {
         return this;
     }
 
-    public StateMachineBuilder addTransition(Transition transition) {
-        stateMachine.addTransition(transition);
-        return this;
-    }
 
     public StateMachine build(){
         return stateMachine;

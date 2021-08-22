@@ -10,6 +10,7 @@ public class Transition {
     private State from;
     private State to;
     private Map<Condition, State> conditions;
+    private boolean exit = false;
 
     public Transition() {
         conditions = new HashMap<>();
@@ -41,6 +42,14 @@ public class Transition {
 
     public Map<Condition, State> getConditions() {
         return conditions;
+    }
+
+    public boolean isExit() {
+        return exit;
+    }
+
+    public void setExit(boolean exit) {
+        this.exit = exit;
     }
 
     public boolean shouldTransition() {

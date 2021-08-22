@@ -28,6 +28,11 @@ public class StateBuilder {
         return this;
     }
 
+    public StateBuilder transition(Transition transition) {
+        state.setTransition(transition);
+        return this;
+    }
+
     public State build() {
         return state;
     }

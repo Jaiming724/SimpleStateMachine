@@ -21,11 +21,6 @@ public class TransitionBuilder {
         return this;
     }
 
-    public TransitionBuilder to(State state) {
-        transition.setTo(state);
-        return this;
-    }
-
     public Transition build() {
         return transition;
     }
@@ -37,6 +32,11 @@ public class TransitionBuilder {
 
     public TransitionBuilder customTransition(Callback callback, State state) {
         transition.addCondition(new CustomCondition(callback), state);
+        return this;
+    }
+
+    public TransitionBuilder exit() {
+        transition.setExit(true);
         return this;
     }
 }
