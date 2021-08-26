@@ -24,17 +24,20 @@ public class Main {
                 .build();
         Transition solidTransition = new TransitionBuilder()
                 .name("Solid Transition")
+                .exitTransition(() -> thermometer.getTemperature() == -999)
                 .customTransition(() -> thermometer.getTemperature() > 0 && thermometer.getTemperature() < 100, liquid)
                 .customTransition(() -> thermometer.getTemperature() > 100, gas)
                 .build();
         Transition gasTransition = new TransitionBuilder()
                 .name("Gas Transition")
+                .exitTransition(() -> thermometer.getTemperature() == -999)
                 .customTransition(() -> thermometer.getTemperature() < 0, solid)
                 .customTransition(() -> thermometer.getTemperature() < 100, liquid)
                 .build();
 
         Transition liquidTransition = new TransitionBuilder()
                 .name("Liquid Transition")
+                .exitTransition(() -> thermometer.getTemperature() == -999)
                 .customTransition(() -> thermometer.getTemperature() < 0, solid)
                 .customTransition(() -> thermometer.getTemperature() > 100, gas)
                 .build();

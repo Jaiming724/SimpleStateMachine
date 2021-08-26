@@ -27,12 +27,9 @@ public class StateMachine {
     public void loop() {
         if (currentState == null)
             throw new IllegalStateException("State machine is not yet initialized!");
-        currentTransition = currentState.getTransition();
-        if (currentTransition.shouldExit()) {
-            currentState.getOnExit().run();
-            shouldExit = true;
+        if (shouldExit)
             return;
-        }
+        currentTransition = currentState.getTransition();
 
         currentTransition.getConditions().forEach((condition, state) -> {
             if (condition instanceof TimedCondition) {
@@ -41,8 +38,9 @@ public class StateMachine {
         });
         if (currentTransition.shouldTransition()) {
             currentState.getOnExit().run();
-            if (currentTransition.getTo() == null) {
+            if (currentTransition.shouldExit() || currentTransition.getTo() == null) {
                 shouldExit = true;
+                return;
             } else {
                 currentState = currentTransition.getTo();
                 currentState.getOnEntry().run();

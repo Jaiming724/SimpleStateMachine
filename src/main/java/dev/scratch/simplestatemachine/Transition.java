@@ -1,6 +1,7 @@
 package dev.scratch.simplestatemachine;
 
 import dev.scratch.simplestatemachine.conditions.Condition;
+import dev.scratch.simplestatemachine.conditions.ExitCondition;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -54,8 +55,13 @@ public class Transition {
 
     public boolean shouldTransition() {
         for (Map.Entry<Condition, State> condition : conditions.entrySet()) {
-            if (condition.getKey().shouldTransition()) {
-                setTo(condition.getValue());
+            Condition currentCondition = condition.getKey();
+            if (currentCondition.shouldTransition()) {
+                if (currentCondition instanceof ExitCondition) {
+                    setExit(true);
+                } else {
+                    setTo(condition.getValue());
+                }
                 return true;
             }
         }

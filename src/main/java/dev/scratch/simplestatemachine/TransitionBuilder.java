@@ -1,6 +1,7 @@
 package dev.scratch.simplestatemachine;
 
 import dev.scratch.simplestatemachine.conditions.CustomCondition;
+import dev.scratch.simplestatemachine.conditions.ExitCondition;
 import dev.scratch.simplestatemachine.conditions.TimedCondition;
 import dev.scratch.simplestatemachine.util.Callback;
 
@@ -35,8 +36,9 @@ public class TransitionBuilder {
         return this;
     }
 
-    public TransitionBuilder exit() {
-        transition.setExit(true);
+    public TransitionBuilder exitTransition(Callback callback) {
+        transition.addCondition(new ExitCondition(callback), null);
         return this;
     }
+
 }
