@@ -20,7 +20,7 @@ public class StateMachine {
         currentState.getOnEntry().run();
     }
 
-    public boolean isShouldExit() {
+    public boolean isActive() {
         return shouldExit;
     }
 
