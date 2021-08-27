@@ -5,7 +5,8 @@ import dev.scratch.simplestatemachine.util.Callback;
 public class CustomCondition extends Condition {
     private Callback callback;
 
-    public CustomCondition(Callback callback) {
+    public CustomCondition(Callback callback, String name) {
+        super(name);
         this.callback = callback;
     }
 

@@ -5,7 +5,8 @@ public class TimedCondition extends Condition {
     private long startTime;
     private boolean started = false;
 
-    public TimedCondition(double time) {
+    public TimedCondition(double time, String name) {
+        super(name);
         this.time = time;
     }
 

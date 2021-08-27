@@ -32,7 +32,7 @@ public class StateMachine {
         currentTransition = currentState.getTransition();
 
         currentTransition.getConditions().forEach((condition, state) -> {
-            if (condition instanceof TimedCondition) {
+            if (condition.getName().equals("TimedCondition")) {
                 ((TimedCondition) condition).startTimer();
             }
         });

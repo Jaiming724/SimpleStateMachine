@@ -1,7 +1,6 @@
 package dev.scratch.simplestatemachine;
 
 import dev.scratch.simplestatemachine.conditions.CustomCondition;
-import dev.scratch.simplestatemachine.conditions.ExitCondition;
 import dev.scratch.simplestatemachine.conditions.TimedCondition;
 import dev.scratch.simplestatemachine.util.Callback;
 
@@ -27,17 +26,17 @@ public class TransitionBuilder {
     }
 
     public TransitionBuilder timedTransition(double time, State state) {
-        transition.addCondition(new TimedCondition(time), state);
+        transition.addCondition(new TimedCondition(time, "TimedCondition"), state);
         return this;
     }
 
     public TransitionBuilder customTransition(Callback callback, State state) {
-        transition.addCondition(new CustomCondition(callback), state);
+        transition.addCondition(new CustomCondition(callback, "CustomTransition"), state);
         return this;
     }
 
     public TransitionBuilder exitTransition(Callback callback) {
-        transition.addCondition(new ExitCondition(callback), null);
+        transition.addCondition(new CustomCondition(callback, "ExitTransition"), null);
         return this;
     }
 
