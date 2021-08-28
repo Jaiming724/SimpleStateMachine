@@ -2,7 +2,7 @@ package dev.scratch.simplestatemachine;
 
 import dev.scratch.simplestatemachine.conditions.Condition;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Transition {
@@ -13,7 +13,7 @@ public class Transition {
     private boolean exit = false;
 
     public Transition() {
-        conditions = new HashMap<>();
+        conditions = new LinkedHashMap<>();
     }
 
     public String getName() {
