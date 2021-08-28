@@ -48,7 +48,7 @@ public class Main {
                 .init(solid)
                 .build();
         stateMachine.start();
-        while (!stateMachine.isActive()) {
+        while (stateMachine.isActive()) {
             thermometer.setTemperature();
             stateMachine.loop();
         }

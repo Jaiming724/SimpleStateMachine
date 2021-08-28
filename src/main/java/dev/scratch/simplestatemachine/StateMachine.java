@@ -21,7 +21,7 @@ public class StateMachine {
     }
 
     public boolean isActive() {
-        return shouldExit;
+        return !shouldExit;
     }
 
     public void loop() {
