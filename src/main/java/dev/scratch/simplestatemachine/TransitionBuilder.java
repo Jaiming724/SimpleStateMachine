@@ -2,7 +2,8 @@ package dev.scratch.simplestatemachine;
 
 import dev.scratch.simplestatemachine.conditions.CustomCondition;
 import dev.scratch.simplestatemachine.conditions.TimedCondition;
-import dev.scratch.simplestatemachine.util.Callback;
+
+import java.util.function.BooleanSupplier;
 
 public class TransitionBuilder {
     private Transition transition;
@@ -26,17 +27,18 @@ public class TransitionBuilder {
     }
 
     public TransitionBuilder timedTransition(double time, State state) {
-        transition.addCondition(new TimedCondition(time), state);
+        transition.addCondition(new TimedCondition(time, "TimedCondition"), state);
         return this;
     }
 
-    public TransitionBuilder customTransition(Callback callback, State state) {
-        transition.addCondition(new CustomCondition(callback), state);
+    public TransitionBuilder customTransition(BooleanSupplier booleanSupplier, State state) {
+        transition.addCondition(new CustomCondition(booleanSupplier, "CustomTransition"), state);
         return this;
     }
 
-    public TransitionBuilder exit() {
-        transition.setExit(true);
+    public TransitionBuilder exitTransition(BooleanSupplier booleanSupplier) {
+        transition.addCondition(new CustomCondition(booleanSupplier, "ExitTransition"), null);
         return this;
     }
+
 }

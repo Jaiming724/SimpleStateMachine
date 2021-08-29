@@ -1,16 +1,17 @@
 package dev.scratch.simplestatemachine.conditions;
 
-import dev.scratch.simplestatemachine.util.Callback;
+import java.util.function.BooleanSupplier;
 
 public class CustomCondition extends Condition {
-    private Callback callback;
+    private BooleanSupplier booleanSupplier;
 
-    public CustomCondition(Callback callback) {
-        this.callback = callback;
+    public CustomCondition(BooleanSupplier booleanSupplier, String name) {
+        super(name);
+        this.booleanSupplier = booleanSupplier;
     }
 
     @Override
     public boolean shouldTransition() {
-        return callback.call();
+        return booleanSupplier.getAsBoolean();
     }
 }

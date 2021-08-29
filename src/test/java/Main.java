@@ -24,17 +24,20 @@ public class Main {
                 .build();
         Transition solidTransition = new TransitionBuilder()
                 .name("Solid Transition")
+                .exitTransition(() -> thermometer.getTemperature() == -999)
                 .customTransition(() -> thermometer.getTemperature() > 0 && thermometer.getTemperature() < 100, liquid)
                 .customTransition(() -> thermometer.getTemperature() > 100, gas)
                 .build();
         Transition gasTransition = new TransitionBuilder()
                 .name("Gas Transition")
+                .exitTransition(() -> thermometer.getTemperature() == -999)
                 .customTransition(() -> thermometer.getTemperature() < 0, solid)
                 .customTransition(() -> thermometer.getTemperature() < 100, liquid)
                 .build();
 
         Transition liquidTransition = new TransitionBuilder()
                 .name("Liquid Transition")
+                .exitTransition(() -> thermometer.getTemperature() == -999)
                 .customTransition(() -> thermometer.getTemperature() < 0, solid)
                 .customTransition(() -> thermometer.getTemperature() > 100, gas)
                 .build();
@@ -43,9 +46,18 @@ public class Main {
         liquid.setTransition(liquidTransition);
         StateMachine stateMachine = new StateMachineBuilder()
                 .init(solid)
+                .addLoopStartEvent(event -> System.out.println("Start looping with event name: " + event.getState().getName()))
+                .addLoopStartEvent(event -> System.out.println("End looping with event name: " + event.getState().getName()))
+                .addTransitionEvent(event -> {
+                    if (event.getFinalState() == null) {
+                        System.out.printf("Transitioning from %s to exiting with transition %s %n", event.getInitialState().getName(), event.getTransition().getName());
+                    } else {
+                        System.out.printf("Transitioning from %s to %s with transition %s %n", event.getInitialState().getName(), event.getFinalState().getName(), event.getTransition().getName());
+                    }
+                })
                 .build();
         stateMachine.start();
-        while (!stateMachine.isShouldExit()) {
+        while (stateMachine.isActive()) {
             thermometer.setTemperature();
             stateMachine.loop();
         }
