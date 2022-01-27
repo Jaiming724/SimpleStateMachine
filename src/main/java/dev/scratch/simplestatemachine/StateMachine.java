@@ -26,7 +26,9 @@ public class StateMachine {
     public void start() {
         if (currentState == null)
             throw new IllegalStateException("State machine has not been initialized");
-        currentState.getOnEntry().run();
+        if (currentState.getOnEntry() != null) {
+            currentState.getOnEntry().run();
+        }
     }
 
     public boolean isActive() {
@@ -50,17 +52,23 @@ public class StateMachine {
             StateTransitionEvent transitionEvent = new StateTransitionEvent(currentState, currentTransition.getTo(), currentTransition);
             transitionHandlerList.forEach(h -> h.execute(transitionEvent));
 
-            currentState.getOnExit().run();
+            if (currentState.getOnExit() != null) {
+                currentState.getOnExit().run();
+            }
             if (currentTransition.shouldExit() || currentTransition.getTo() == null) {
                 shouldExit = true;
                 return;
             } else {
                 currentState = currentTransition.getTo();
-                currentState.getOnEntry().run();
+                if (currentState.getOnEntry() != null) {
+                    currentState.getOnEntry().run();
+                }
             }
 
         }
-        currentState.getLoop().run();
+        if (currentState.getLoop() != null) {
+            currentState.getLoop().run();
+        }
         loopEndHandlerList.forEach(h -> h.execute(new LoopEvent(currentState)));
     }
 
